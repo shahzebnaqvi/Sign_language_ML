@@ -1,0 +1,146 @@
+{% load static %}
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static '/lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+
+    <link href="{% static '/css/style.css' %}" rel="stylesheet">
+    <link
+            href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,600,700,700i|Montserrat:300,400,500,600,700"
+            rel="stylesheet">
+    <link href="{% static '/lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+<header id="header" style="background-color: #f6f6fb; height: 65px;">
+
+    <div class="container">
+
+        <div class="logo float-left">
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <h2 class="text-light" style="margin:0px 0px 2px 0px; font-size: 20px;"><a href="/"
+                                                                                       class="scrollto"><span>GRS Bengali</span></a>
+            </h2>
+            <!-- <a href="#header" class="scrollto"><img src="img/logo.png" alt="" class="img-fluid"></a> -->
+        </div>
+        <nav class="main-nav float-right d-none d-lg-block">
+            <ul>
+                <li class="active" style="margin: 0px;"><a href="/">Home</a></li>
+                <li class= "drop-down"> <a href="#">{{ user.username }}</a>
+                    <ul>
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
+              </li>
+            </ul>
+        </nav>
+
+    </div>
+</header><!-- #header -->
+
+<div class="row">
+    <p class="ml-5" style="margin-top: 7%; font-weight: 600; font-family: 'Montserrat';">Welcome on board. let us do the practice session using real time gesture recognition system.</p>
+
+    <div class="col-md-6">
+        <img class="ml-5" style="width: 80%;" src="{% url 'video_feed' %}">
+        <a href="/question" class="btn btn-success ml-5" style="margin-top: 2%; color: white;">Proceed to GRS quiz</a>
+    </div>
+
+    <div class="col-md-6">
+        <img src="{% static 'img/signs.jpg' %}" style="margin-top: 2%;">
+    </div>
+
+
+
+    
+    <!-- <div class="col-md-6">
+        <div class="container" style="margin-top: 10%;">
+            <form action="{% url 'before_question' %}" method="post">
+                {% csrf_token %}
+
+                <input type="hidden" name="actual_time" value="{{ gesture_image.time }}">
+                <input type="hidden" name="taken_time" value="00:00:00" id="taken_time">
+                <input type="hidden" name="taken_seconds" value="00" id="taken_seconds">
+                <input type="hidden" name="type" value="gesture">
+
+                <h1>
+                    <time>00:00:00</time>
+                </h1>
+                <button type="button" hidden class="btn btn-success" id="start">start</button>
+                <button type="button" class="btn btn-danger" id="stop">stop</button>
+                <button type="submit" class="btn btn-success" id="next">next</button>
+                <button type="button" class="btn btn-secondary" id="clear">clear</button>
+
+                <button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#exampleModal">
+                    Result
+                </button>
+            </form>
+        </div>
+    </div> -->
+</div>
+
+<script>
+    let h1 = document.getElementsByTagName('h1')[0],
+        start = document.getElementById('start'),
+        taken_time = document.getElementById('taken_time'),
+        taken_seconds = document.getElementById('taken_seconds'),
+        stop = document.getElementById('stop'),
+        clear = document.getElementById('clear'),
+        next = document.getElementById('next'),
+        seconds = 0, minutes = 0, hours = 0, t;
+
+    function add() {
+        seconds++;
+        if (seconds >= 60) {
+            seconds = 0;
+            minutes++;
+            if (minutes >= 60) {
+                minutes = 0;
+                hours++;
+            }
+        }
+
+        taken_seconds.value = seconds;
+        h1.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+        taken_time.value = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+
+        timer();
+    }
+
+    function timer() {
+        t = setTimeout(add, 1000);
+    }
+
+    timer();
+
+
+    start.onclick = timer;
+    start.disabled = true; // initially disable the start button as timer is starting while page load
+    next.disabled = true; // initially disable the start button as timer is starting while page load
+
+    stop.onclick = function () {
+        clearTimeout(t);
+        stop.disabled = true;
+        start.disabled = false;
+        next.disabled = false;
+    }
+
+    clear.onclick = function () {
+        h1.textContent = "00:00:00";
+        taken_time.value = "00:00:00";
+        seconds = 0;
+        minutes = 0;
+        hours = 0;
+    }
+</script>
+
+</body>
+
+</html>

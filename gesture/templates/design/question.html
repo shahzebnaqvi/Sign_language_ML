@@ -1,0 +1,391 @@
+{% load static %}
+<!DOCTYPE HTML>
+
+<head>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <title>Questions</title>
+    <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static '/lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,600,700,700i|Montserrat:300,400,500,600,700" rel="stylesheet">
+
+    <link href="{% static '/lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
+    <link href="{% static '/css/style.css' %}" rel="stylesheet">
+
+    <link href="{% static '/css/qa.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+<header id="header" style="background-color: #f6f6fb; height: 65px;">
+
+    <div class="container">
+
+        <div class="logo float-left">
+            <h2 class="text-light" style="margin:0px 0px 2px 0px; font-size: 20px;"><a href="/"
+                                                                                       class="scrollto"><span>GRS Bengali</span></a></h2>
+        </div>
+        <nav class="main-nav float-right d-none d-lg-block">
+            <ul>
+                <li class="active" style="margin: 0px;"><a href="/">Home</a></li>
+                <li class= "drop-down"> <a href="#">{{ user.username }}</a>
+                    <ul>
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
+              </li>
+            </ul>
+        </nav>
+
+    </div>
+</header>
+
+<!-- <label for="fname">First name:</label>
+<input type="text" id="fname" name="fname"> -->
+<div class="container" id="page-wrap" style="margin-bottom: 10%;">
+
+
+    <h1 style="margin-top:22%; text-align: center;">Quiz for GRS</h1>
+
+
+    <form id="quiz" method="post">
+        {% csrf_token %}
+
+        <input type="hidden" name="type" value="answers">
+
+        <ol>
+
+            <li>
+
+                <h3>What sign language is the image below?</h3>
+                <img src="{% static '/img/quiz-photos/0.jpg' %}" style="width:80px" alt="">
+                <div style="display: flex;">
+                    <div class="ml-3">
+                        <input type="radio" name="question-1-answers" id="question-1-answers-A" value="A" required/>
+                        <label for="question-1-answers-A" >1</label>
+                    </div>
+
+                    <div class="ml-3">
+                        <input  type="radio" name="question-1-answers" id="question-1-answers-B" value="B"/>
+                        <label for="question-1-answers-B"> 2</label>
+                    </div>
+                    <div class="ml-3">
+                        <input type="radio" name="question-1-answers" id="question-1-answers-C" value="C"/>
+                        <label for="question-1-answers-C"> 0</label>
+                    </div>
+                    <div class="ml-3">
+                        <input type="radio" name="question-1-answers" id="question-1-answers-D" value="D"/>
+                        <label for="question-1-answers-D"> 4</label>
+                    </div>
+                    <div class="ml-3">
+                        <input type="radio" name="question-1-answers" id="question-1-answers-E" value="E"/>
+                        <label for="question-1-answers-E">9</label>
+                    </div>
+                </div>
+
+            </li>
+
+            <li>
+
+                <h3>What sign language is the image below?</h3>
+                <img src="{% static '/img/quiz-photos/1.jpg' %}" style="width:80px" alt="">
+                <div style="display: flex;">
+
+                    <div class="ml-3">
+                        <input type="radio" name="question-2-answers" id="question-2-answers-A" value="A" required/>
+                        <label for="question-2-answers-A">1 </label>
+                    </div>
+
+                    <div class="ml-3">
+                        <input type="radio" name="question-2-answers" id="question-2-answers-B" value="B"/>
+                        <label for="question-2-answers-B"> 7</label>
+                    </div>
+                    <div class="ml-3">
+                        <input type="radio" name="question-2-answers" id="question-2-answers-C" value="C"/>
+                        <label for="question-2-answers-C"> 3</label>
+                    </div>
+                    <div class="ml-3">
+                        <input type="radio" name="question-2-answers" id="question-2-answers-D" value="D"/>
+                        <label for="question-2-answers-D"> 5</label>
+                    </div>
+                    <div class="ml-3">
+                        <input type="radio" name="question-2-answers" id="question-2-answers-E" value="E"/>
+                        <label for="question-2-answers-E">2</label>
+                    </div>
+                </div>
+
+            </li>
+
+            <li>
+
+                <h3>What sign language is the image below?</h3>
+                <img src="{% static '/img/quiz-photos/2.jpg' %}" style="width:80px" alt="">
+                <div style="display: flex;">
+                    <div class="ml-3">
+                        <input type="radio" name="question-3-answers" id="question-3-answers-A" value="A" required/>
+                        <label for="question-3-answers-A">0 </label>
+                    </div>
+
+                    <div class="ml-3">
+                        <input type="radio" name="question-3-answers" id="question-3-answers-B" value="B"/>
+                        <label for="question-3-answers-B"> 5</label>
+                    </div>
+                    <div class="ml-3">
+                        <input type="radio" name="question-3-answers" id="question-3-answers-C" value="C"/>
+                        <label for="question-3-answers-C"> 3</label>
+                    </div>
+                    <div class="ml-3">
+                        <input type="radio" name="question-3-answers" id="question-3-answers-D" value="D"/>
+                        <label for="question-3-answers-D"> 2</label>
+                    </div>
+                    <div class="ml-3">
+                        <input type="radio" name="question-3-answers" id="question-3-answers-E" value="E"/>
+                        <label for="question-3-answers-E">5</label>
+                    </div>
+                </div>
+
+            </li>
+
+            <li>
+
+            <h3>What sign language is the image below?</h3>
+            <img src="{% static '/img/quiz-photos/3.jpg' %}" style="width:80px" alt="">
+                <div style="display: flex;">
+                    <div class="ml-3">
+                        <input type="radio" name="question-4-answers" id="question-4-answers-A" value="A" required/>
+                        <label for="question-4-answers-A">1 </label>
+                    </div>
+
+                    <div class="ml-3">
+                        <input type="radio" name="question-4-answers" id="question-4-answers-B" value="B"/>
+                        <label for="question-4-answers-B"> 2</label>
+                    </div>
+                    <div class="ml-3">
+                        <input type="radio" name="question-4-answers" id="question-4-answers-C" value="C"/>
+                        <label for="question-4-answers-C"> 8</label>
+                    </div>
+                    <div class="ml-3">
+                        <input type="radio" name="question-4-answers" id="question-4-answers-D" value="D"/>
+                        <label for="question-4-answers-D"> 4</label>
+                    </div>
+                    <div class="ml-3">
+                        <input type="radio" name="question-4-answers" id="question-4-answers-E" value="E"/>
+                        <label for="question-4-answers-E">3</label>
+                    </div>
+                </div>
+
+            </li>
+
+            <li>
+
+            <h3>What sign language is the image below?</h3>
+            <img src="{% static '/img/quiz-photos/4.jpg' %}" style="width:80px" alt="">
+
+                <div style="display: flex;">
+                    <div class="ml-3">
+                        <input type="radio" name="question-5-answers" id="question-5-answers-A" value="A" required/>
+                        <label for="question-5-answers-A">4 </label>
+                    </div>
+
+                    <div class="ml-3">
+                        <input type="radio" name="question-5-answers" id="question-5-answers-B" value="B"/>
+                        <label for="question-5-answers-B"> 3</label>
+                    </div>
+                    <div class="ml-3">
+                        <input type="radio" name="question-5-answers" id="question-5-answers-C" value="C"/>
+                        <label for="question-5-answers-C"> 2</label>
+                    </div>
+                    <div class="ml-3">
+                        <input type="radio" name="question-5-answers" id="question-5-answers-D" value="D"/>
+                        <label for="question-5-answers-D"> 0</label>
+                    </div>
+                    <div class="ml-3">
+                        <input type="radio" name="question-5-answers" id="question-5-answers-E" value="E"/>
+                        <label for="question-5-answers-E">5</label>
+                    </div>
+                </div>
+
+            </li>
+            <li>
+
+            <h3>What sign language is the image below?</h3>
+                <img src="{% static '/img/quiz-photos/5.jpg' %}" style="width:80px" alt="">
+    
+                    <div style="display: flex;">
+                        <div class="ml-3">
+                            <input type="radio" name="question-6-answers" id="question-6-answers-A" value="A" required/>
+                            <label for="question-6-answers-A">1 </label>
+                        </div>
+    
+                        <div class="ml-3">
+                            <input type="radio" name="question-6-answers" id="question-6-answers-B" value="B"/>
+                            <label for="question-6-answers-B"> 2</label>
+                        </div>
+                        <div class="ml-3">
+                            <input type="radio" name="question-6-answers" id="question-6-answers-C" value="C"/>
+                            <label for="question-6-answers-C"> 3</label>
+                        </div>
+                        <div class="ml-3">
+                            <input type="radio" name="question-6-answers" id="question-6-answers-D" value="D"/>
+                            <label for="question-6-answers-D"> 4</label>
+                        </div>
+                        <div class="ml-3">
+                            <input type="radio" name="question-6-answers" id="question-6-answers-E" value="E"/>
+                            <label for="question-6-answers-E">5</label>
+                        </div>
+                    </div>
+    
+                </li>
+                <li>
+
+                    <h3>What sign language is the image below?</h3>
+                    <img src="{% static '/img/quiz-photos/6.jpg' %}" style="width:80px" alt="">
+        
+                        <div style="display: flex;">
+                            <div class="ml-3">
+                                <input type="radio" name="question-7-answers" id="question-7-answers-A" value="A" required/>
+                                <label for="question-7-answers-A">7 </label>
+                            </div>
+        
+                            <div class="ml-3">
+                                <input type="radio" name="question-7-answers" id="question-7-answers-B" value="B"/>
+                                <label for="question-7-answers-B"> 6</label>
+                            </div>
+                            <div class="ml-3">
+                                <input type="radio" name="question-7-answers" id="question-7-answers-C" value="C"/>
+                                <label for="question-7-answers-C"> 1</label>
+                            </div>
+                            <div class="ml-3">
+                                <input type="radio" name="question-7-answers" id="question-7-answers-D" value="D"/>
+                                <label for="question-7-answers-D"> 2</label>
+                            </div>
+                            <div class="ml-3">
+                                <input type="radio" name="question-7-answers" id="question-7-answers-E" value="E"/>
+                                <label for="question-7-answers-E">3</label>
+                            </div>
+                        </div>
+        
+                    </li>
+                    <li>
+
+                        <h3>What sign language is the image below?</h3>
+                        <img src="{% static '/img/quiz-photos/7.jpg' %}" style="width:80px" alt="">
+            
+                            <div style="display: flex;">
+                                <div class="ml-3">
+                                    <input type="radio" name="question-8-answers" id="question-8-answers-A" value="A" required/>
+                                    <label for="question-5-answers-A">5 </label>
+                                </div>
+            
+                                <div class="ml-3">
+                                    <input type="radio" name="question-8-answers" id="question-8-answers-B" value="B"/>
+                                    <label for="question-5-answers-B"> 7</label>
+                                </div>
+                                <div class="ml-3">
+                                    <input type="radio" name="question-8-answers" id="question-8-answers-C" value="C"/>
+                                    <label for="question-5-answers-C"> 1</label>
+                                </div>
+                                <div class="ml-3">
+                                    <input type="radio" name="question-8-answers" id="question-8-answers-D" value="D"/>
+                                    <label for="question-8-answers-D"> 2</label>
+                                </div>
+                                <div class="ml-3">
+                                    <input type="radio" name="question-8-answers" id="question-8-answers-E" value="E"/>
+                                    <label for="question-8-answers-E">3</label>
+                                </div>
+                            </div>
+            
+                        </li>
+                        <li>
+
+                        <h3>What sign language is the image below?</h3>
+                            <img src="{% static '/img/quiz-photos/8.jpg' %}" style="width:80px" alt="">
+                
+                                <div style="display: flex;">
+                                    <div class="ml-3">
+                                        <input type="radio" name="question-9-answers" id="question-9-answers-A" value="A" required/>
+                                        <label for="question-9-answers-A">1 </label>
+                                    </div>
+                
+                                    <div class="ml-3">
+                                        <input type="radio" name="question-9-answers" id="question-9-answers-B" value="B"/>
+                                        <label for="question-9-answers-B"> 8</label>
+                                    </div>
+                                    <div class="ml-3">
+                                        <input type="radio" name="question-9-answers" id="question-9-answers-C" value="C"/>
+                                        <label for="question-9-answers-C"> 3</label>
+                                    </div>
+                                    <div class="ml-3">
+                                        <input type="radio" name="question-9-answers" id="question-9-answers-D" value="D"/>
+                                        <label for="question-9-answers-D"> 2</label>
+                                    </div>
+                                    <div class="ml-3">
+                                        <input type="radio" name="question-9-answers" id="question-9-answers-E" value="E"/>
+                                        <label for="question-9-answers-E">6</label>
+                                    </div>
+                                </div>
+                
+                            </li>
+                            <li>
+
+                            <h3>What sign language is the image below?</h3>
+                                <img src="{% static '/img/quiz-photos/9.jpg' %}" style="width:80px" alt="">
+                    
+                                    <div style="display: flex;">
+                                        <div class="ml-3">
+                                            <input type="radio" name="question-10-answers" id="question-10-answers" value="A" required/>
+                                            <label for="question-10-answers">9 </label>
+                                        </div>
+                    
+                                        <div class="ml-3">
+                                            <input type="radio" name="question-10-answers" id="question-10-answers-B" value="B"/>
+                                            <label for="question-10-answers-B"> 5</label>
+                                        </div>
+                                        <div class="ml-3">
+                                            <input type="radio" name="question-10-answers" id="question-10-answers-C" value="C"/>
+                                            <label for="question-10-answers-C"> 4</label>
+                                        </div>
+                                        <div class="ml-3">
+                                            <input type="radio" name="question-10-answers" id="question-10-answers-D" value="D"/>
+                                            <label for="question-10-answers-D">3</label>
+                                        </div>
+                                        <div class="ml-3">
+                                            <input type="radio" name="question-10-answers" id="question-10-answers-E" value="E"/>
+                                            <label for="question-10-answers-E">5</label>
+                                        </div>
+                                    </div>
+                    
+                                </li>
+
+        </ol>
+
+        <button type="submit" class="btn btn-success">Submit</button>
+
+    </form>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Result</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Your Score is 80%
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

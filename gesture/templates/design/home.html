@@ -1,0 +1,202 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>GRS</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicons -->
+    <link href="{% static 'img/favicon1.png' %}" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,600,700,700i|Montserrat:300,400,500,600,700"
+          rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="{% static '/lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static '/lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static '/lib/ionicons/css/ionicons.min.css' %}" rel="stylesheet">
+    <link href="{% static '/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static '/lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="{% static '/css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+<!--==========================
+Header
+============================-->
+<header id="header">
+
+    <div class="container">
+
+        <div class="logo float-left">
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <h1 class="text-light"><a href="#intro" class="scrollto"><span>GRS Bengali</span></a>
+            </h1>
+            <!-- <a href="#header" class="scrollto"><img src="img/logo.png" alt="" class="img-fluid"></a> -->
+        </div>
+
+        <nav class="main-nav float-right d-none d-lg-block">
+            <ul>
+                <li class="active"><a href="#intro">Home</a></li>
+                <li><a href="#footer">Contact Us</a></li>
+                {% if user.is_authenticated %}
+              <li class= "drop-down"> <a href="#">{{ user.username }}</a>
+                    <ul>
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
+              </li>
+            {% else %}
+              <li><a href="{% url 'login' %}" target="_blank">Login</a></li>
+              <li><a href="{% url 'signup' %}" target="_blank">Sign Up</a></li>
+            {% endif %}
+            </ul>
+        </nav><!-- .main-nav -->
+
+    </div>
+</header><!-- #header -->
+
+<!--==========================
+  Intro Sectionss
+============================-->
+<section id="intro" class="clearfix">
+    <div class="container d-flex h-100">
+        <div class="align-self-center" style="flex: auto;">
+            <div class="intro-info order-md-first order-last" style="text-align: center;">
+                <h2 st>Hi, <span style="text-transform: capitalize;">{{ user.username }}</span> 👋</h2>
+                <h3>what you want to learn today? &#128516;</h3>
+                <div class="mr-5">
+                    <a class="btn-get-started" href="/sign" style="color: white;">Numeric</a>
+                    <a class="btn-get-started ml-3" style="color: white;">Alphabets</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- #intro -->
+
+<!--==========================
+  Footer
+============================-->
+<footer id="footer" class="section-bg">
+    <div class="footer-top">
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-lg-6">
+
+                    <div class="row">
+
+                        <div class="col-sm-6">
+
+                            <div class="footer-info">
+                                <h3>GRS Bengali</h3>
+                                <p>Description</p>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="footer-links">
+                                <h4>Contact Us</h4>
+                                <p>
+                                    University Of Malaya <br>
+                                    Kuala Lampur<br>
+                                    Malaysia <br>
+                                    <strong>Phone:</strong> [00000000] <br>
+                                    <strong>Email:</strong> user@gmail.com<br>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-6">
+
+                    <div class="form">
+
+                        <h4>Send us a message</h4>
+
+                        <form action="" method="post" role="form" class="contactForm">
+                            <div class="form-group">
+                                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name"
+                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars"/>
+                                <div class="validation"></div>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" name="email" id="email"
+                                       placeholder="Your Email" data-rule="email"
+                                       data-msg="Please enter a valid email"/>
+                                <div class="validation"></div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="subject" id="subject"
+                                       placeholder="Subject" data-rule="minlen:4"
+                                       data-msg="Please enter at least 8 chars of subject"/>
+                                <div class="validation"></div>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" name="message" rows="5" data-rule="required"
+                                          data-msg="Please write something for us" placeholder="Message"></textarea>
+                                <div class="validation"></div>
+                            </div>
+
+                            <div id="sendmessage">Your message has been sent. Thank you!</div>
+                            <div id="errormessage"></div>
+
+                            <div class="text-center">
+                                <button type="submit" title="Send Message">Send Message</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="copyright">
+            &copy; Copyright <strong>GRS Bengali</strong>. All Rights Reserved
+        </div>
+
+    </div>
+</footer><!-- #footer -->
+
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+<!-- Uncomment below i you want to use a preloader -->
+<!-- <div id="preloader"></div> -->
+
+<!-- JavaScript Libraries -->
+<script src="{% static '/lib/jquery/jquery.min.js' %}"></script>
+<script src="{% static '/lib/jquery/jquery-migrate.min.js' %}"></script>
+<script src="{% static '/lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static '/lib/easing/easing.min.js' %}"></script>
+<script src="{% static '/lib/mobile-nav/mobile-nav.js' %}"></script>
+<script src="{% static '/lib/wow/wow.min.js' %}"></script>
+<script src="{% static '/lib/waypoints/waypoints.min.js' %}"></script>
+<script src="{% static '/lib/counterup/counterup.min.js' %}"></script>
+<script src="{% static '/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+<script src="{% static '/lib/isotope/isotope.pkgd.min.js' %}"></script>
+<script src="{% static '/lib/lightbox/js/lightbox.min.js' %}"></script>
+<!-- Contact Form JavaScript File -->
+<script src="{% static '/contactform/contactform.js' %}"></script>
+
+<!-- Template Main Javascript File -->
+<script src="{% static '/js/main.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>
