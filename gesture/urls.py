@@ -1,7 +1,9 @@
 from django.urls import path
 from . import views
 
-from django.conf.urls import url, include
+# from django.conf.urls import url, include
+from django.urls import re_path as url
+
 from django.contrib.auth import views as auth_views
 from .views import login_page
 
