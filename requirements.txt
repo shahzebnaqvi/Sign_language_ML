@@ -12,3 +12,4 @@ psycopg2-binary==2.8.4
 pypng==0.0.20
 urllib3==1.25.8
 virtualenv==16.4.3
+freeze==1.0.10
