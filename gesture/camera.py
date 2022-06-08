@@ -213,71 +213,120 @@ from keras import models
 
 
 
+# class VideoCamera(object):
+#     def __init__(self):
+#         self.video = cv2.VideoCapture(0)
+#         self.model = models.load_model('G:\waleed\project 4\Sign_Lang\Models\model_number.h5')
+
+
+#     def __del__(self):
+#         self.video.release()
+
+#     def get_frame(self):
+#         # success, image = self.video.read()
+#         # We are using Motion JPEG, but OpenCV defaults to capture raw images,
+#         # so we must encode it into JPEG in order to correctly display the
+#         # video stream.
+#         # Capture frames from the camera
+#         ret, frame = self.video.read()
+#         # im = Image.fromarray(frame, 'RGB')
+#         # img_array = np.expand_dims(img_array, axis=0)
+#         img_array=[]
+#         prediction = int(self.model.predict(img_array)[0][0])
+     
+#         # ret, frame = self.video.read()
+
+#         # Get hand data from the rectangle sub window
+#         cv2.rectangle(frame, (100, 100), (300, 300), (0, 255, 0), 0)
+#         crop_image = frame[100:300, 100:300]
+
+#         # Apply Gaussian blur
+#         blur = cv2.GaussianBlur(crop_image, (3, 3), 0)
+
+#         # Change color-space from BGR -> HSV
+#         hsv = cv2.cvtColor(blur, cv2.COLOR_BGR2HSV)
+
+#         # Create a binary image with where white will be skin colors and rest is black
+#         mask2 = cv2.inRange(hsv, np.array([2, 0, 0]), np.array([20, 255, 255]))
+
+#         # Kernel for morphological transformation
+#         kernel = np.ones((5, 5))
+
+#         # Apply morphological transformations to filter out the background noise
+#         dilation = cv2.dilate(mask2, kernel, iterations=1)
+#         erosion = cv2.erode(dilation, kernel, iterations=1)
+
+#         # Apply Gaussian Blur and Threshold
+#         filtered = cv2.GaussianBlur(erosion, (3, 3), 0)
+#         ret, thresh = cv2.threshold(filtered, 127, 255, 0)
+
+
+#         contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+#         try:
+#             # Find contour with maximum area
+#             contour = max(contours, key=lambda x: cv2.contourArea(x))
+
+#             # Create bounding rectangle around the contour
+#             x, y, w, h = cv2.boundingRect(contour)
+#             cv2.rectangle(crop_image, (x, y), (x + w, y + h), (0, 0, 255), 0)
+
+#             # Find convex hull
+#             hull = cv2.convexHull(contour)
+
+#             # Draw contour
+#             drawing = np.zeros(crop_image.shape, np.uint8)
+#             cv2.drawContours(drawing, [contour], -1, (0, 255, 0), 0)
+#             cv2.drawContours(drawing, [hull], -1, (0, 0, 255), 0)
+
+#             hull = cv2.convexHull(contour, returnPoints=False)
+         
+#         except Exception as e:
+#             print(e)
+#             pass
+
+#         ret, jpeg = cv2.imencode('.jpg', frame)
+#         return jpeg.tobytes()
+
+
+
 class VideoCamera(object):
+
+    #Load the saved model
     def __init__(self):
         self.video = cv2.VideoCapture(0)
+        self.model = models.load_model('G:\waleed\project 4\Sign_Lang\Models\model_number.h5')
+
 
     def __del__(self):
         self.video.release()
 
     def get_frame(self):
-        # success, image = self.video.read()
-        # We are using Motion JPEG, but OpenCV defaults to capture raw images,
-        # so we must encode it into JPEG in order to correctly display the
-        # video stream.
-        # Capture frames from the camera
-        ret, frame = self.video.read()
 
-        # Get hand data from the rectangle sub window
-        cv2.rectangle(frame, (100, 100), (300, 300), (0, 255, 0), 0)
-        crop_image = frame[100:300, 100:300]
+        while True:
+                _, frame = self.video.read()
 
-        # Apply Gaussian blur
-        blur = cv2.GaussianBlur(crop_image, (3, 3), 0)
+                #Convert the captured frame into RGB
+                im = Image.fromarray(frame, 'RGB')
 
-        # Change color-space from BGR -> HSV
-        hsv = cv2.cvtColor(blur, cv2.COLOR_BGR2HSV)
+                #Resizing into 128x128 because we trained the model with this image size.
+                im = im.resize((224,224))
+                img_array = np.array(im)
 
-        # Create a binary image with where white will be skin colors and rest is black
-        mask2 = cv2.inRange(hsv, np.array([2, 0, 0]), np.array([20, 255, 255]))
+                #Our keras model used a 4D tensor, (images x height x width x channel)
+                #So changing dimension 128x128x3 into 1x128x128x3 
+                img_array = np.expand_dims(img_array, axis=0)
 
-        # Kernel for morphological transformation
-        kernel = np.ones((5, 5))
+                #Calling the predict method on model to predict 'me' on the image
+                prediction = int(self.model.predict(img_array)[0][0])
+                print(prediction)
+                #if prediction is 0, which means I am missing on the image, then show the frame in gray color.
+                if prediction == 0:
+                        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-        # Apply morphological transformations to filter out the background noise
-        dilation = cv2.dilate(mask2, kernel, iterations=1)
-        erosion = cv2.erode(dilation, kernel, iterations=1)
-
-        # Apply Gaussian Blur and Threshold
-        filtered = cv2.GaussianBlur(erosion, (3, 3), 0)
-        ret, thresh = cv2.threshold(filtered, 127, 255, 0)
-
-
-        contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-
-        try:
-            # Find contour with maximum area
-            contour = max(contours, key=lambda x: cv2.contourArea(x))
-
-            # Create bounding rectangle around the contour
-            x, y, w, h = cv2.boundingRect(contour)
-            cv2.rectangle(crop_image, (x, y), (x + w, y + h), (0, 0, 255), 0)
-
-            # Find convex hull
-            hull = cv2.convexHull(contour)
-
-            # Draw contour
-            drawing = np.zeros(crop_image.shape, np.uint8)
-            cv2.drawContours(drawing, [contour], -1, (0, 255, 0), 0)
-            cv2.drawContours(drawing, [hull], -1, (0, 0, 255), 0)
-
-            hull = cv2.convexHull(contour, returnPoints=False)
-         
-        except Exception as e:
-            print(e)
-            pass
-
-        ret, jpeg = cv2.imencode('.jpg', frame)
-        return jpeg.tobytes()
-
-        
+                cv2.imshow("Capturing", frame)
+                key=cv2.waitKey(1)
+                if key == ord('q'):
+                        break
+        self.video.release()
+        cv2.destroyAllWindows()
